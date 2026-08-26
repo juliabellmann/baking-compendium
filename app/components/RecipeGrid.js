@@ -6,18 +6,21 @@ import Link from "next/link";
 export default function RecipeGrid({ recipes }) {
   const [search, setSearch] = useState("");
 
-  const filteredRecipes = recipes.filter(
-    (recipe) =>
-      recipe.name.toLowerCase().includes(search.toLowerCase()) ||
-      recipe.description?.toLowerCase().includes(search.toLowerCase()) ||
-      recipe.category?.toLowerCase().includes(search.toLowerCase()),
-  );
+  const filteredRecipes = recipes.filter((recipe) => {
+    const searchTerm = search.toLowerCase();
+
+    return (
+      recipe.name?.toLowerCase().includes(searchTerm) ||
+      recipe.description?.toLowerCase().includes(searchTerm) ||
+      recipe.category?.toLowerCase().includes(searchTerm)
+    );
+  });
 
   return (
-    <div>
+    <div className="recipe-dashboard">
       {/* Suche */}
 
-      <div>
+      <div className="recipe-search">
         <input
           type="search"
           placeholder="Rezept suchen..."
@@ -28,37 +31,73 @@ export default function RecipeGrid({ recipes }) {
 
       {/* Anzahl */}
 
-      <p>
+      <p className="recipe-count">
         {filteredRecipes.length}{" "}
         {filteredRecipes.length === 1 ? "Rezept" : "Rezepte"}
       </p>
 
-      {/* Rezepte */}
+      {/* Rezeptkarten */}
 
       {filteredRecipes.length > 0 ? (
-        <div>
-          {filteredRecipes.map((recipe) => (
-            <Link key={recipe.id} href={`/rezepte/${recipe.id}`}>
-              <article>
-                <h3>{recipe.name}</h3>
+        <div className="recipe-grid">
+          {filteredRecipes.map((recipe) => {
+            const imageUrl = recipe.image_url;
 
-                {recipe.category && <p>{recipe.category}</p>}
+            return (
+              <Link
+                key={recipe.id}
+                href={`/rezepte/${recipe.id}`}
+                className="recipe-card-link"
+              >
+                <article className="recipe-card">
+                  {/* Bild */}
 
-                {recipe.description && <p>{recipe.description}</p>}
+                  <div className="recipe-card-image">
+                    {imageUrl ? (
+                      <img src={imageUrl} alt={recipe.name} />
+                    ) : (
+                      <div className="recipe-card-placeholder">
+                        <span>🧁</span>
+                      </div>
+                    )}
+                  </div>
 
-                <p>
-                  {recipe.base_amount} {recipe.base_unit}
-                </p>
+                  {/* Inhalt */}
 
-                {recipe.baking_time !== null && (
-                  <p>{recipe.baking_time} Minuten Backzeit</p>
-                )}
-              </article>
-            </Link>
-          ))}
+                  <div className="recipe-card-content">
+                    {recipe.category && (
+                      <span className="recipe-category">{recipe.category}</span>
+                    )}
+
+                    <h3>{recipe.name}</h3>
+
+                    {recipe.description && (
+                      <p className="recipe-description">{recipe.description}</p>
+                    )}
+
+                    <div className="recipe-meta">
+                      <span>
+                        🍰 {recipe.base_amount} {recipe.base_unit}
+                      </span>
+
+                      {recipe.baking_time !== null && (
+                        <span>⏱ {recipe.baking_time} Min.</span>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              </Link>
+            );
+          })}
         </div>
       ) : (
-        <p>Keine Rezepte gefunden.</p>
+        <div className="no-recipes">
+          <p>Keine Rezepte gefunden.</p>
+
+          <button type="button" onClick={() => setSearch("")}>
+            Suche zurücksetzen
+          </button>
+        </div>
       )}
     </div>
   );

@@ -29,9 +29,9 @@ main {
   padding: 40px 0 80px;
 }
 
-/* -------------------------------------------------------
-   Header
-------------------------------------------------------- */
+/* =======================================================
+   HEADER
+======================================================= */
 
 header {
   margin-bottom: 50px;
@@ -39,7 +39,8 @@ header {
 
 header h1 {
   margin: 0 0 10px;
-  font-size: 42px;
+  font-size: clamp(32px, 5vw, 48px);
+  letter-spacing: -0.03em;
 }
 
 header p {
@@ -48,26 +49,31 @@ header p {
   color: #746a63;
 }
 
-/* -------------------------------------------------------
-   Sections
-------------------------------------------------------- */
+/* =======================================================
+   SECTION
+======================================================= */
 
 section h2 {
   margin-bottom: 25px;
   font-size: 28px;
 }
 
-/* -------------------------------------------------------
-   Suche
-------------------------------------------------------- */
+/* =======================================================
+   SUCHE
+======================================================= */
+
+.recipe-search {
+  margin-bottom: 10px;
+}
 
 input[type="search"] {
   width: 100%;
-  max-width: 600px;
-  padding: 14px 18px;
+  max-width: 620px;
+
+  padding: 15px 20px;
 
   border: 1px solid #d8d0c8;
-  border-radius: 12px;
+  border-radius: 14px;
 
   background: white;
   color: #332c27;
@@ -76,79 +82,301 @@ input[type="search"] {
 
   font-size: 16px;
 
-  margin-bottom: 15px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+input[type="search"]::placeholder {
+  color: #a49a91;
 }
 
 input[type="search"]:focus {
   border-color: #9b7b61;
-  box-shadow: 0 0 0 3px rgba(155, 123, 97, 0.15);
+
+  box-shadow: 0 0 0 4px rgba(155, 123, 97, 0.12);
 }
 
-/* -------------------------------------------------------
-   Rezeptanzahl
-------------------------------------------------------- */
+/* =======================================================
+   REZEPTANZAHL
+======================================================= */
 
-section > div > p {
+.recipe-count {
+  margin: 0 0 24px;
+
   color: #746a63;
+
+  font-size: 14px;
 }
 
-/* -------------------------------------------------------
-   Rezeptkarten
-------------------------------------------------------- */
+/* =======================================================
+   REZEPT-GRID
+======================================================= */
 
-section > div > div {
+.recipe-grid {
   display: grid;
 
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
 
-  gap: 22px;
-
-  margin-top: 20px;
+  gap: 26px;
 }
 
-article {
+/* =======================================================
+   LINK
+======================================================= */
+
+.recipe-card-link {
+  display: block;
+}
+
+/* =======================================================
+   REZEPTKARTE
+======================================================= */
+
+.recipe-card {
   height: 100%;
 
-  padding: 24px;
+  overflow: hidden;
 
-  background: white;
+  background: #ffffff;
 
   border: 1px solid #e2dbd4;
 
-  border-radius: 18px;
+  border-radius: 20px;
 
-  box-shadow: 0 4px 15px rgba(70, 55, 45, 0.06);
+  box-shadow: 0 5px 18px rgba(70, 55, 45, 0.06);
 
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
 }
 
-article:hover {
-  transform: translateY(-4px);
+.recipe-card-link:hover .recipe-card {
+  transform: translateY(-6px);
 
-  box-shadow: 0 10px 25px rgba(70, 55, 45, 0.12);
+  border-color: #d2c5ba;
+
+  box-shadow: 0 14px 35px rgba(70, 55, 45, 0.14);
 }
 
-article h3 {
-  margin: 0 0 8px;
+/* =======================================================
+   BILD
+======================================================= */
 
-  font-size: 22px;
+.recipe-card-image {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 16 / 10;
+
+  overflow: hidden;
+
+  background: #eee8e2;
 }
 
-article p {
-  margin: 8px 0;
+.recipe-card-image img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+  transition: transform 0.4s ease;
+}
+
+.recipe-card-link:hover .recipe-card-image img {
+  transform: scale(1.05);
+}
+
+/* =======================================================
+   BILD-PLATZHALTER
+======================================================= */
+
+.recipe-card-placeholder {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #eee7df, #f7f3ee);
+}
+
+.recipe-card-placeholder span {
+  font-size: 52px;
+
+  opacity: 0.65;
+}
+
+/* =======================================================
+   KARTENINHALT
+======================================================= */
+
+.recipe-card-content {
+  padding: 22px 22px 24px;
+}
+
+/* =======================================================
+   KATEGORIE
+======================================================= */
+
+.recipe-category {
+  display: inline-block;
+
+  margin-bottom: 9px;
+
+  padding: 5px 10px;
+
+  border-radius: 999px;
+
+  background: #eee6de;
+
+  color: #806b5a;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+/* =======================================================
+   TITEL
+======================================================= */
+
+.recipe-card h3 {
+  margin: 0;
+
+  color: #332c27;
+
+  font-size: 23px;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.02em;
+}
+
+/* =======================================================
+   BESCHREIBUNG
+======================================================= */
+
+.recipe-description {
+  display: -webkit-box;
+
+  margin: 10px 0 18px;
 
   color: #746a63;
 
-  line-height: 1.5;
+  font-size: 15px;
+
+  line-height: 1.55;
+
+  overflow: hidden;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
-article p:first-of-type {
-  font-size: 14px;
-  font-weight: bold;
+/* =======================================================
+   META
+======================================================= */
 
-  text-transform: uppercase;
+.recipe-meta {
+  display: flex;
 
-  letter-spacing: 0.05em;
+  flex-wrap: wrap;
+
+  gap: 8px 16px;
+
+  padding-top: 15px;
+
+  border-top: 1px solid #eee8e2;
+
+  color: #806f63;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.recipe-meta span {
+  white-space: nowrap;
+}
+
+/* =======================================================
+   KEINE REZEPTE
+======================================================= */
+
+.no-recipes {
+  padding: 50px 20px;
+
+  text-align: center;
+
+  border: 1px dashed #d5ccc3;
+
+  border-radius: 18px;
+
+  background: #ffffff;
+}
+
+.no-recipes p {
+  margin: 0 0 18px;
+
+  color: #746a63;
+}
+
+.no-recipes button {
+  padding: 10px 16px;
+
+  border: 1px solid #cfc3b8;
+
+  border-radius: 10px;
+
+  background: white;
+
+  color: #5d5047;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.no-recipes button:hover {
+  background: #f5f0eb;
+
+  border-color: #b9aa9d;
+}
+
+/* =======================================================
+   RESPONSIVE
+======================================================= */
+
+@media (max-width: 600px) {
+  main {
+    width: min(100% - 24px, 1200px);
+
+    padding-top: 25px;
+  }
+
+  header {
+    margin-bottom: 35px;
+  }
+
+  .recipe-grid {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+
+  .recipe-card-content {
+    padding: 19px 20px 21px;
+  }
 }
