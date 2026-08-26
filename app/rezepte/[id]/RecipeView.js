@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { formatIngredient } from "@/lib/recipe/formatting";
 
 export default function RecipeView({
   recipe,
@@ -115,12 +116,12 @@ export default function RecipeView({
         {ingredients && ingredients.length > 0 ? (
           <ul>
             {ingredients.map((ingredient) => (
-              <li key={ingredient.id}>
-                {calculateAmount(ingredient.amount)}{" "}
-                {ingredient.unit &&
-                  `${ingredient.unit} `}
-                {ingredient.name}
-              </li>
+<li key={ingredient.id}>
+  {formatIngredient(
+    ingredient,
+    calculateAmount(ingredient.amount)
+  )}
+</li>
             ))}
           </ul>
         ) : (
@@ -158,16 +159,14 @@ export default function RecipeView({
                       return null;
                     }
 
-                    return (
-                      <strong key={index}>
-                        {calculateAmount(
-                          ingredient.amount
-                        )}{" "}
-                        {ingredient.unit &&
-                          `${ingredient.unit} `}
-                        {ingredient.name}
-                      </strong>
-                    );
+return (
+  <strong key={index}>
+    {formatIngredient(
+      ingredient,
+      calculateAmount(ingredient.amount)
+    )}
+  </strong>
+);
                   }
 
                   return null;
