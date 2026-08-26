@@ -10,12 +10,11 @@ export default async function RecipePage({ params }) {
   // Rezept laden
   // -------------------------------------------------------
 
-  const { data: recipe, error: recipeError } =
-    await supabase
-      .from("recipes")
-      .select("*")
-      .eq("id", id)
-      .single();
+  const { data: recipe, error: recipeError } = await supabase
+    .from("recipes")
+    .select("*")
+    .eq("id", id)
+    .single();
 
   if (recipeError) {
     console.error(recipeError);
@@ -23,9 +22,7 @@ export default async function RecipePage({ params }) {
     return (
       <main>
         <h1>Fehler</h1>
-        <p>
-          Das Rezept konnte nicht geladen werden.
-        </p>
+        <p>Das Rezept konnte nicht geladen werden.</p>
       </main>
     );
   }
@@ -34,9 +31,7 @@ export default async function RecipePage({ params }) {
     return (
       <main>
         <h1>Rezept nicht gefunden</h1>
-        <p>
-          Dieses Rezept existiert nicht.
-        </p>
+        <p>Dieses Rezept existiert nicht.</p>
       </main>
     );
   }
@@ -45,10 +40,7 @@ export default async function RecipePage({ params }) {
   // Zutaten laden
   // -------------------------------------------------------
 
-  const {
-    data: ingredients,
-    error: ingredientsError,
-  } = await supabase
+  const { data: ingredients, error: ingredientsError } = await supabase
     .from("ingredients")
     .select("*")
     .eq("recipe_id", id)
@@ -64,10 +56,7 @@ export default async function RecipePage({ params }) {
   // Zubereitungsschritte laden
   // -------------------------------------------------------
 
-  const {
-    data: steps,
-    error: stepsError,
-  } = await supabase
+  const { data: steps, error: stepsError } = await supabase
     .from("steps")
     .select("*")
     .eq("recipe_id", id)
